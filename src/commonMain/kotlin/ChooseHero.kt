@@ -6,16 +6,29 @@ import com.soywiz.korge.ui.textButton
 import com.soywiz.korge.view.*
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.file.std.resourcesVfs
-import heroes.Arwald
+import heroes.*
 
 class ChooseHero(val dependency: Dependency) : Scene() {
-    val heroes = listOf(Arwald)
+    val heroes = listOf(Alve, Arwald)
     private var i = 0
-    private val hero = heroes[i]
+    private val hero
+            get() = heroes[i]
 
     override suspend fun Container.sceneInit() {
         val width = views.actualWidth.toDouble()
         val height = views.actualHeight.toDouble()
+
+        suspend fun update() {
+            (getChildAt(3) as Text).text = hero.might_strength.toString()
+            hero.sprite = Sprite(resourcesVfs["images\\heroes\\${hero.name}.png"].readBitmap()).apply {
+                scale = 8.0
+                smoothing = false
+                xy(width/2 - this.width/2, height/2 - this.height/2)
+            }
+            removeChild(getChildAt(4))
+            addChildAt(hero.sprite, 4)
+        }
+        
         textButton(256.0, 64.0, "Back To Main Menu")
                 .xy(10, 10)
                 .onClick {
@@ -42,8 +55,9 @@ class ChooseHero(val dependency: Dependency) : Scene() {
         portal.onOut { portal.alpha = 0.7 }
         portal.spriteDisplayTime = 150.milliseconds
         portal.playAnimationLooped()*/
-        addChild(Sprite(resourcesVfs["open_magic_book.png"].readBitmap()).apply { //images\might.png
-            scale = 0.2
+        addChild(Sprite(resourcesVfs["images\\mights.png"].readBitmap()).apply {
+            smoothing = false
+            scale = 3.0
             onOver { this.alpha = 1.0 }
             onOut { this.alpha = 0.7 }
             xy(100, 100)
@@ -51,21 +65,44 @@ class ChooseHero(val dependency: Dependency) : Scene() {
         addChild(text(hero.might_strength.toString(), 20.0) {
             xy(100.0, 120.0 + lastChild!!.height)
         })
-        hero.sprite = Sprite(resourcesVfs["open_magic_book.png"].readBitmap()).apply {
-            scale = 0.5
+        hero.sprite = Sprite(resourcesVfs["images\\heroes\\${hero.name}.png"].readBitmap()).apply {
+            scale = 8.0
+            smoothing = false
             xy(width/2 - this.width/2, height/2 - this.height/2)
-            text(hero.name, 48.0) {
-                xy(width/2 - this.width - this@apply.width, height/2)
-            }
-            /*text(hero.description, 24.0) {
-                xy(0.0, height/2 + 100.0)
-            }*/
-        }//images\heroes\${hero.name}.png
+        }
         addChild(hero.sprite)
-    }
-
-    override suspend fun sceneDestroy() {
-        super.sceneDestroy()
-        Arwald.sprite.scale = 1.0
+        text(hero.name, 48.0) {
+            xy(width/2 - this.width/2, 10.0)
+        }
+        addChild(Sprite(resourcesVfs["images\\menu_arrow.png"].readBitmap()).apply {
+            scale = 2.0
+            xy(this.width, height/2 + this.height)
+            onOver {
+                if (i > 0) this.alpha = 1.0
+            }
+            onOut { this.alpha = 0.6 }
+            onClick {
+                if (i > 0) {
+                    i--
+                    update()
+                }
+            }
+            this.rotationDegrees = 180.0
+        })
+        addChild(Sprite(resourcesVfs["images\\menu_arrow.png"].readBitmap()).apply {
+            scale = 2.0
+            xy(width - this.width, height/2)
+            onOver {
+                if (i < heroes.size - 1) this.alpha = 1.0
+            }
+            onOut { this.alpha = 0.6 }
+            onClick {
+                if (i < heroes.size - 1) {
+                    i++
+                    println(this@sceneInit.children.joinToString())
+                    update()
+                }
+            }
+        })
     }
 }

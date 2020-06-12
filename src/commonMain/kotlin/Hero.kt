@@ -9,6 +9,6 @@ interface Hero {
     var bow_strength: Double
     var might_strength: Double
     val name: String
-    val sprite: Sprite
+    var sprite: Sprite
     val description: String
 }
