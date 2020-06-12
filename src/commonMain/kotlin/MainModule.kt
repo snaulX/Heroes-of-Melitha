@@ -8,6 +8,7 @@ import kotlin.reflect.KClass
 object MainModule: Module() {
     override val mainScene: KClass<out Scene> = MainMenu::class
     override val title: String = "Heroes of Melitha"
+    var currentMap: String = "StartMap"
 
     override suspend fun AsyncInjector.configure() {
         mapInstance(Dependency(resourcesVfs["music\\menu_theme.wav"]

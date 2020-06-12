@@ -9,12 +9,12 @@ import com.soywiz.korio.file.std.resourcesVfs
 class ChooseHero(val dependency: Dependency) : Scene() {
     suspend override fun Container.sceneInit() {
         textButton(256.0, 64.0, "Back To Main Menu")
-                .xy(20, 100)
+                .xy(10, 10)
                 .onClick {
                     sceneContainer.changeTo<MainMenu>()
                 }
         textButton(400.0, 70.0, "Go")
-                .xy(width/2, views.actualHeight.toDouble() - 70.0)
+                .xy(views.actualWidth/2.0 - 100.0, views.actualHeight.toDouble() - 70.0)
                 .onClick {
                     dependency.channel.stop()
                 }
@@ -27,7 +27,7 @@ class ChooseHero(val dependency: Dependency) : Scene() {
         rows = 1,
         offsetBetweenColumns = 0,
         offsetBetweenRows = 0)
-        val portal = sprite(portalsMap)
+        val portal = sprite(portalsMap).xy(100, 100)
         portal.spriteDisplayTime = 150.milliseconds
         portal.playAnimationLooped()
     }
