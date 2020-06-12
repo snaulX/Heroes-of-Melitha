@@ -9,6 +9,8 @@ object MainModule: Module() {
     override val mainScene: KClass<out Scene> = MainMenu::class
     override val title: String = "Heroes of Melitha"
     var currentMap: String = "StartMap"
+    var money: Int = 0
+    lateinit var hero: Hero
 
     override suspend fun AsyncInjector.configure() {
         mapInstance(Dependency(resourcesVfs["music\\menu_theme.wav"]
