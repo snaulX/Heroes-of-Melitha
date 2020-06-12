@@ -1,5 +1,6 @@
+import com.soywiz.korau.sound.NativeSoundChannel
 import com.soywiz.korge.Korge
 
 suspend fun main() = Korge(Korge.Config(MainModule))
 
-class Dependency
+class Dependency(val channel: NativeSoundChannel)
