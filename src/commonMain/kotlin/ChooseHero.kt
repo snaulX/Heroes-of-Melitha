@@ -38,10 +38,11 @@ class ChooseHero(val dependency: Dependency) : Scene() {
                 .onClick {
                     sceneContainer.changeTo<MainMenu>()
                 }
-        textButton(400.0, 70.0, "Go")
+        textButton(400.0, 70.0, "Go With Dynamic Load")
                 .xy(width/2.0 - 100.0, height - 70.0)
                 .onClick {
                     MainModule.hero = hero
+                    MainModule.dynamicLoad = true
                     dependency.channel.stop()
                     sceneContainer.changeTo<Map>()
                 }
@@ -139,5 +140,13 @@ class ChooseHero(val dependency: Dependency) : Scene() {
                 }
             }
         })
+        textButton(300.0, 70.0, "Load And Go")
+                .xy(100.0, height - 70.0)
+                .onClick {
+                    MainModule.hero = hero
+                    MainModule.dynamicLoad = false
+                    dependency.channel.stop()
+                    sceneContainer.changeTo<Map>()
+                }
     }
 }

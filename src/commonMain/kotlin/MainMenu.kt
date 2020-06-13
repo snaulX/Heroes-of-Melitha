@@ -15,8 +15,8 @@ class MainMenu(val dependency: Dependency): Scene() {
         }!!
         play.xy(20, 100)
         play.textColor = Colors.BLUEVIOLET
-        lore = textButton(128.0, 64.0, "Lore").onClick {
-            println("Lore")
+        lore = textButton(128.0, 64.0, "Exit").onClick {
+            views.gameWindow.exit()
         }!!
         lore.xy(20, 200)
         lore.textColor = Colors.BLUEVIOLET

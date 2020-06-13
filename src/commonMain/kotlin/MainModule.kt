@@ -15,6 +15,7 @@ object MainModule: Module() {
     lateinit var hero: Hero
     override val bgcolor: RGBA
         get() = Colors.CORAL
+    var dynamicLoad = false
 
     override suspend fun AsyncInjector.configure() {
         mapInstance(Dependency(resourcesVfs["music\\menu_theme.wav"]
