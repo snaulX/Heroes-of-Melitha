@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Map name="Start Map" width="50" height="50">
+    <Floor x="0" y="0" width="1" height="1" />
+    <Player x="1" y="1" />
+    <Crystal x="10" y="10" />
+    <Random>
+        <Box x="30" y="30" />
+    </Random>
+    <Portal x="5" y="49" />
+</Map>
