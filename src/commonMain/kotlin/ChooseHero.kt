@@ -20,13 +20,17 @@ class ChooseHero(val dependency: Dependency) : Scene() {
 
         suspend fun update() {
             (getChildAt(3) as Text).text = hero.might_strength.toString()
+            (getChildAt(5) as Text).text = hero.armour.toString()
+            (getChildAt(7) as Text).text = hero.hp.toString()
+            (getChildAt(9) as Text).text = hero.bow_strength.toString()
             hero.sprite = Sprite(resourcesVfs["images\\heroes\\${hero.name}.png"].readBitmap()).apply {
                 scale = 8.0
                 smoothing = false
                 xy(width/2 - this.width/2, height/2 - this.height/2)
             }
-            removeChild(getChildAt(4))
-            addChildAt(hero.sprite, 4)
+            removeChild(getChildAt(10))
+            addChildAt(hero.sprite, 10)
+            (getChildAt(11) as Text).text = hero.name
         }
         
         textButton(256.0, 64.0, "Back To Main Menu")
@@ -55,16 +59,46 @@ class ChooseHero(val dependency: Dependency) : Scene() {
         portal.onOut { portal.alpha = 0.7 }
         portal.spriteDisplayTime = 150.milliseconds
         portal.playAnimationLooped()*/
-        addChild(Sprite(resourcesVfs["images\\mights.png"].readBitmap()).apply {
+        image(resourcesVfs["images\\mights.png"].readBitmap()) {
             smoothing = false
             scale = 3.0
             onOver { this.alpha = 1.0 }
             onOut { this.alpha = 0.7 }
             xy(100, 100)
-        })
-        addChild(text(hero.might_strength.toString(), 20.0) {
+        }
+        text(hero.might_strength.toString(), 20.0) {
             xy(100.0, 120.0 + lastChild!!.height)
-        })
+        }
+        image(resourcesVfs["images\\shield.png"].readBitmap()) {
+            smoothing = false
+            scale = 3.0
+            onOver { this.alpha = 1.0 }
+            onOut { this.alpha = 0.7 }
+            xy(width - this.width - 100, 100.0)
+        }
+        text(hero.armour.toString(), 20.0) {
+            xy(width - lastChild!!.width - 100.0, 120.0 + lastChild!!.height)
+        }
+        image(resourcesVfs["images\\hp.png"].readBitmap()) {
+            smoothing = false
+            scale = 0.3
+            onOver { this.alpha = 1.0 }
+            onOut { this.alpha = 0.7 }
+            xy(width - this.width - 100, 250.0)
+        }
+        text(hero.hp.toString(), 20.0) {
+            xy(width - lastChild!!.width - 100.0, 270.0 + lastChild!!.height)
+        }
+        image(resourcesVfs["images\\weapon\\active_bow.png"].readBitmap()) {
+            smoothing = false
+            scale = 3.0
+            onOver { this.alpha = 1.0 }
+            onOut { this.alpha = 0.7 }
+            xy(100, 250)
+        }
+        text(hero.bow_strength.toString(), 20.0) {
+            xy(100.0, 270 + lastChild!!.height)
+        }
         hero.sprite = Sprite(resourcesVfs["images\\heroes\\${hero.name}.png"].readBitmap()).apply {
             scale = 8.0
             smoothing = false
