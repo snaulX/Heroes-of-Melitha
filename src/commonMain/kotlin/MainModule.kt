@@ -22,5 +22,6 @@ object MainModule: Module() {
                 .play(PlaybackTimes.INFINITE)))
         mapPrototype { MainMenu(get()) }
         mapPrototype { ChooseHero(get()) }
+        mapPrototype { Map(get()) }
     }
 }

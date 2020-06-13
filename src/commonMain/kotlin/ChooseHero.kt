@@ -43,6 +43,7 @@ class ChooseHero(val dependency: Dependency) : Scene() {
                 .onClick {
                     MainModule.hero = hero
                     dependency.channel.stop()
+                    sceneContainer.changeTo<Map>()
                 }
         /*val portalsMap = SpriteAnimation(resourcesVfs["images\\portals.png"].readBitmap(),
         spriteWidth = 64,
