@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="983aee04-2964-43dd-8b13-06ee0358c84b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/.vs/HeroesMapEditor/v16/.suo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/App.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/App.xaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/App.xaml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/HeroesMapEditor.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/HeroesMapEditor.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/MainWindow.xaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/MainWindow.xaml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/Map.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/NewMap.xaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/NewMap.xaml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/Properties/AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/Properties/Resources.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/Properties/Resources.resx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/Properties/Settings.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/Properties/Settings.settings" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/bin/Debug/HeroesMapEditor.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/bin/Debug/HeroesMapEditor.exe.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/bin/Debug/HeroesMapEditor.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/.NETFramework,Version=v4.7.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/App.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/App.g.i.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor.Properties.Resources.resources" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor.csproj.GenerateResource.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor.csprojAssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor.g.resources" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor_MarkupCompile.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor_MarkupCompile.i.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor_MarkupCompile.i.lref" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/HeroesMapEditor_MarkupCompile.lref" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/MainWindow.baml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/MainWindow.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/MainWindow.g.i.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/NewMap.baml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/NewMap.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HeroesMapEditor/obj/Debug/NewMap.g.i.cs" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1dGK4IVXJAzMaduyhAlLYMyPcNU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="MapEditor" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="983aee04-2964-43dd-8b13-06ee0358c84b" name="Default Changelist" comment="" />
+      <created>1592045796107</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592045796107</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
