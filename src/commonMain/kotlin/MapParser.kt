@@ -1,6 +1,7 @@
 import com.soywiz.korio.serialization.xml.Xml
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
+import mobs.Goblin
 
 object MapParser {
     val boxes: MutableSet<Point> = mutableSetOf()
@@ -11,6 +12,7 @@ object MapParser {
     var width = 0
     var height = 0
     var name = ""
+    val goblins: MutableList<Point> = mutableListOf()
 
     fun parse(xml: Xml) {
         if (xml.name == "Map") {
@@ -30,6 +32,9 @@ object MapParser {
             for (rect in xml.children("Floor")) {
                 floor.add(Rectangle(rect.int("x") * 64, rect.int("y") * 64,
                         rect.int("width"), rect.int("height")))
+            }
+            for (goblin in xml.children("Goblin")) {
+                goblins.add(Point(goblin.int("x") * 64, goblin.int("y") * 64))
             }
         } else {
             throw RuntimeException("${xml.name} is not valid name of root node in map")

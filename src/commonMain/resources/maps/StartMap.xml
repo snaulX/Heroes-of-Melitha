@@ -2,9 +2,10 @@
 <Map name="Start Map" width="50" height="50">
     <Floor x="0" y="0" width="20" height="20" />
     <Player x="1" y="1" />
+    <Goblin x="13" y="4" />
     <Crystal x="10" y="10" />
-    <Random>
-        <Box x="30" y="30" />
-    </Random>
-    <Portal x="5" y="49" />
+    <!--<Random>-->
+        <Box x="5" y="10" />
+    <!--</Random>-->
+    <Portal x="20" y="20" />
 </Map>
