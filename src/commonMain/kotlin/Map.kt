@@ -1,26 +1,15 @@
 import com.soywiz.klock.hr.hrMilliseconds
 import com.soywiz.klock.milliseconds
-import com.soywiz.klock.seconds
-import com.soywiz.kmem.clamp
 import com.soywiz.korev.Key
-import com.soywiz.korge.animate.waitStop
-import com.soywiz.korge.input.onKeyDown
-import com.soywiz.korge.input.onOut
-import com.soywiz.korge.input.onOver
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.tween.duration
-import com.soywiz.korge.tween.get
-import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.async.async
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
-import com.soywiz.korio.lang.closeable
 import com.soywiz.korio.serialization.xml.readXml
-import com.soywiz.korma.geom.Point
-import kotlin.math.pow
+import mobs.Goblin
 import kotlin.random.Random
 
 class Map(val dependency: Dependency) : Scene() {
@@ -31,6 +20,14 @@ class Map(val dependency: Dependency) : Scene() {
     private var dy = MapParser.player.y
     private val sprite: Sprite
         get() = player.sprite
+    val boxes: MutableList<Image> = mutableListOf()
+    val crystals: MutableList<Image> = mutableListOf()
+    val mobs: MutableList<Mob> = mutableListOf()
+    val floor: MutableList<Image> = mutableListOf()
+    val w: Double
+        get() = views.actualWidth.toDouble()
+    val h: Double
+        get() = views.actualHeight.toDouble()
 
     override suspend fun Container.sceneInit() {
         val portal = Sprite(SpriteAnimation(resourcesVfs["images\\portals.png"].readBitmap(),
@@ -42,12 +39,6 @@ class Map(val dependency: Dependency) : Scene() {
                 rows = 1,
                 offsetBetweenColumns = 0,
                 offsetBetweenRows = 0))
-        val boxes: MutableList<Image> = mutableListOf()
-        val crystals: MutableList<Image> = mutableListOf()
-        val mobs: MutableList<Image> = mutableListOf()
-        val floor: MutableList<Image> = mutableListOf()
-        val w: Double = views.actualWidth.toDouble()
-        val h: Double = views.actualHeight.toDouble()
         position(dx + w/2, dy + h/2)
         val load = async {
             views.clearColor = Colors.BLACK
@@ -57,6 +48,8 @@ class Map(val dependency: Dependency) : Scene() {
             val box = resourcesVfs["maps\\boxes\\wood_box.png"].readBitmap()
             val crystal = resourcesVfs["maps\\score\\crystal.png"].readBitmap()
             val goblin = resourcesVfs["images\\mobs\\goblin.png"].readBitmap()
+
+            // Other
             for (f in MapParser.floor) {
                 for (i in 1..f.height.toInt()) {
                     for (j in 1..f.width.toInt()) {
@@ -77,8 +70,28 @@ class Map(val dependency: Dependency) : Scene() {
                 })
             }
             for (g in MapParser.goblins) {
-                mobs.add(image(goblin) {
-                    xy(g.x, g.y)
+                mobs.add(Goblin().apply {
+                    image = image(goblin) {
+                        xy(g.x, g.y)
+                    }
+                    map = this@Map
+                    image.addHrUpdater {
+                        val scale = if (it == 0.hrMilliseconds) 0.0 else (it / 16.666666.hrMilliseconds)
+                        if (collidesWith(sprite)) {
+                            if (views.keys[Key.SPACE])
+                                hp -= player.might_strength * player.might_speed
+                            if (player.armour > 0.0)
+                                player.armour -= hit
+                            else
+                                player.hp -= hit
+                        } else {
+                            move(scale)
+                        }
+                        if (hp <= 0.0) {
+                            this@sceneInit.removeChild(this)
+                            MainModule.money += coin
+                        }
+                    }
                 })
             }
 
@@ -91,11 +104,12 @@ class Map(val dependency: Dependency) : Scene() {
             // Player
             sprite.scale = 1.0
             addChild(sprite.xy(MapParser.player.x, MapParser.player.y))
+
         }
         if (!MainModule.dynamicLoad) load.await()
 
-        sprite.onCollision {
-            if (it == portal) {
+        sprite.onCollision { target ->
+            if (target == portal) {
                 if (views.input.keys[Key.E]) {
                     launch {
                         println(MainModule.currentMap)
@@ -111,15 +125,16 @@ class Map(val dependency: Dependency) : Scene() {
                         }
                     }
                 }
-            } else if (crystals.contains(it)) {
+            } else if (crystals.contains(target)) {
                 if (views.input.keys[Key.E]) {
                     player.haveCrystal = true
-                    removeChild(it)
+                    removeChild(target)
                 }
             }
         }
         sprite.
             addHrUpdater {
+                if (player.hp <= 0.0) launch { sceneContainer.changeTo<ChooseHero>() }
                 val scale = if (it == 0.hrMilliseconds) 0.0 else (it / 16.666666.hrMilliseconds)
                 if (collidesWith(floor) && !collidesWith(boxes)) {
                     when {
