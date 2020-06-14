@@ -5,7 +5,6 @@ import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.readBitmap
-import com.soywiz.korio.async.async
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.serialization.xml.readXml
@@ -18,7 +17,7 @@ class Map(val dependency: Dependency) : Scene() {
     private val speed = player.speed
     private var dx = MapParser.player.x
     private var dy = MapParser.player.y
-    private val sprite: Sprite
+    val sprite: Sprite
         get() = player.sprite
     val boxes: MutableList<Image> = mutableListOf()
     val crystals: MutableList<Image> = mutableListOf()
@@ -40,7 +39,7 @@ class Map(val dependency: Dependency) : Scene() {
                 offsetBetweenColumns = 0,
                 offsetBetweenRows = 0))
         position(dx + w/2, dy + h/2)
-        val load = async {
+        launch {
             views.clearColor = Colors.BLACK
             MapParser.parse(resourcesVfs["maps\\${MainModule.currentMap}.xml"].readXml())
             val stone = resourcesVfs["maps\\floor\\stone_floor${Random.nextInt(1, 5)}.png"]
@@ -71,15 +70,37 @@ class Map(val dependency: Dependency) : Scene() {
             }
             for (g in MapParser.goblins) {
                 mobs.add(Goblin().apply {
+                    if (MainModule.hard) {
+                        hp = 1000.0
+                        hit = 1.0
+                    }
                     image = image(goblin) {
                         xy(g.x, g.y)
                     }
                     map = this@Map
+                    when (Random.nextInt(4)) {
+                        0 -> {
+                            dx = 1.0
+                            dy = 0.0
+                        }
+                        1 -> {
+                            dx = -1.0
+                            dy = 0.0
+                        }
+                        2 -> {
+                            dy = -1.0
+                            dx = 0.0
+                        }
+                        else -> {
+                            dy = 1.0
+                            dx = 0.0
+                        }
+                    }
                     image.addHrUpdater {
                         val scale = if (it == 0.hrMilliseconds) 0.0 else (it / 16.666666.hrMilliseconds)
                         if (collidesWith(sprite)) {
                             if (views.keys[Key.SPACE])
-                                hp -= player.might_strength * player.might_speed
+                                hp -= player.might_strength * player.might_speed * scale
                             if (player.armour > 0.0)
                                 player.armour -= hit
                             else
@@ -104,9 +125,7 @@ class Map(val dependency: Dependency) : Scene() {
             // Player
             sprite.scale = 1.0
             addChild(sprite.xy(MapParser.player.x, MapParser.player.y))
-
         }
-        if (!MainModule.dynamicLoad) load.await()
 
         sprite.onCollision { target ->
             if (target == portal) {
