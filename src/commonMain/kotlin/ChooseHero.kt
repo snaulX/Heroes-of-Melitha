@@ -9,7 +9,7 @@ import com.soywiz.korio.file.std.resourcesVfs
 import heroes.*
 
 class ChooseHero(val dependency: Dependency) : Scene() {
-    val heroes = listOf(Alve, Arwald)
+    val heroes = listOf(Alve, Arwald, Eva)
     private var i = 0
     private val hero
             get() = heroes[i]

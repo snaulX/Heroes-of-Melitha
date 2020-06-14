@@ -10,6 +10,5 @@ interface Hero {
     var might_strength: Double
     val name: String
     var sprite: Sprite
-    val description: String
     var haveCrystal: Boolean
 }

@@ -118,6 +118,9 @@ class Map(val dependency: Dependency) : Scene() {
 
             // Portal
             portal.xy(MapParser.portal.x, MapParser.portal.y)
+            portal.addUpdater {
+                alpha = if (player.haveCrystal) 1.0 else 0.7
+            }
             portal.spriteDisplayTime = 150.milliseconds
             portal.playAnimationLooped()
             addChild(portal)
@@ -153,7 +156,7 @@ class Map(val dependency: Dependency) : Scene() {
         }
         sprite.
             addHrUpdater {
-                if (player.hp <= 0.0) launch { sceneContainer.changeTo<ChooseHero>() }
+                if (player.hp <= 0.0) views.gameWindow.exit()
                 val scale = if (it == 0.hrMilliseconds) 0.0 else (it / 16.666666.hrMilliseconds)
                 if (collidesWith(floor) && !collidesWith(boxes)) {
                     when {

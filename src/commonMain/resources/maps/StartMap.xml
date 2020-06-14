@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Map name="Start Map" width="10" height="10">
     <Floor x="0" y="0" width="10" height="10" />
+    <!--Borders-->
     <Box x="0" y="0" />
     <Box x="1" y="0" />
     <Box x="2" y="0" />
@@ -22,8 +23,33 @@
     <Box x="0" y="8" />
     <Box x="0" y="9" />
     <Box x="0" y="10" />
+    <Box x="0" y="11" />
+    <Box x="1" y="11" />
+    <Box x="2" y="11" />
+    <Box x="3" y="11" />
+    <Box x="4" y="11" />
+    <Box x="5" y="11" />
+    <Box x="6" y="11" />
+    <Box x="7" y="11" />
+    <Box x="8" y="11" />
+    <Box x="9" y="11" />
+    <Box x="10" y="11" />
+    <Box x="11" y="0" />
+    <Box x="11" y="1" />
+    <Box x="11" y="2" />
+    <Box x="11" y="3" />
+    <Box x="11" y="4" />
+    <Box x="11" y="5" />
+    <Box x="11" y="6" />
+    <Box x="11" y="7" />
+    <Box x="11" y="8" />
+    <Box x="11" y="9" />
+    <Box x="11" y="10" />
+    <Box x="11" y="11" />
+    <!--End of borders-->
     <Player x="2" y="2" />
     <Goblin x="7" y="8" />
+    <Goblin x="9" y="4" />
     <Crystal x="10" y="5" />
     <Box x="5" y="5" />
     <Portal x="10" y="10" />
