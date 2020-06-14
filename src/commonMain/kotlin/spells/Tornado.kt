@@ -10,7 +10,7 @@ import com.soywiz.korge.view.*
 class Tornado: Spell {
     override lateinit var sprite: Image
     override lateinit var map: Map
-    override val cost: Int = 10
+    override val cost: Int = 20
     override val range: Double = 2.5
     override val castTime: Double = 1.5
 

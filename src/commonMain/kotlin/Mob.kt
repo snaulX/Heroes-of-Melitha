@@ -6,6 +6,5 @@ interface Mob {
     var hp: Double
     var hit: Double
     var image: Image
-    val coin: Int
     fun move(scale: Double)
 }

@@ -13,8 +13,8 @@ import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.serialization.xml.readXml
-import mobs.Goblin
-import spells.Tornado
+import mobs.*
+import spells.*
 import kotlin.random.Random
 
 class Map(val dependency: Dependency) : Scene() {
@@ -177,7 +177,6 @@ class Map(val dependency: Dependency) : Scene() {
                         }
                         if (hp <= 0.0) {
                             this@sceneInit.removeChild(this)
-                            MainModule.money += coin
                         }
                     }
                 })
@@ -196,6 +195,10 @@ class Map(val dependency: Dependency) : Scene() {
             player.spells.add(Tornado().apply {
                 map = this@Map
                 sprite = Sprite(resourcesVfs["images\\spells\\tornado.png"].readBitmap())
+            })
+            player.spells.add(Cactus().apply {
+                map = this@Map
+                sprite = Sprite(resourcesVfs["images\\spells\\cactus.png"].readBitmap())
             })
             sprite.scale = 1.0
             addChild(sprite.xy(MapParser.player.x, MapParser.player.y))
@@ -252,19 +255,19 @@ class Map(val dependency: Dependency) : Scene() {
                 val scale = if (it == 0.hrMilliseconds) 0.0 else (it / 16.666666.hrMilliseconds)
                 if (collidesWith(floor) && !collidesWith(boxes)) {
                     when {
-                        views.input.keys[Key.RIGHT] -> {
+                        views.input.keys[Key.D] -> {
                             dx = this@Map.speed
                             dy = 0.0
                         }
-                        views.input.keys[Key.LEFT] -> {
+                        views.input.keys[Key.A] -> {
                             dx = -this@Map.speed
                             dy = 0.0
                         }
-                        views.input.keys[Key.UP] -> {
+                        views.input.keys[Key.W] -> {
                             dy = -this@Map.speed
                             dx = 0.0
                         }
-                        views.input.keys[Key.DOWN] -> {
+                        views.input.keys[Key.S] -> {
                             dy = this@Map.speed
                             dx = 0.0
                         }

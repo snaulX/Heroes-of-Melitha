@@ -12,7 +12,6 @@ class Goblin: Mob {
     override var hp: Double = 600.0
     override var hit: Double = 0.7
     override lateinit var image: Image
-    override val coin: Int = 1
     var dx: Double = 0.0
     var dy: Double = 0.0
 
