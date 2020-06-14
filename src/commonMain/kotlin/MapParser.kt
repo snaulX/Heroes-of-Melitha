@@ -1,7 +1,6 @@
 import com.soywiz.korio.serialization.xml.Xml
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
-import mobs.Goblin
 
 object MapParser {
     val boxes: MutableSet<Point> = mutableSetOf()
@@ -39,5 +38,17 @@ object MapParser {
         } else {
             throw RuntimeException("${xml.name} is not valid name of root node in map")
         }
+    }
+
+    fun clear() {
+        boxes.clear()
+        player = Point()
+        portal = Point()
+        floor.clear()
+        crystals.clear()
+        width = 0
+        height = 0
+        name = ""
+        goblins.clear()
     }
 }

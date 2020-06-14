@@ -27,17 +27,12 @@ class Map(val dependency: Dependency) : Scene() {
     val player
         get() = MainModule.hero
     private val speed = player.speed
-    private val curSpeed: Point = Point()
     private var dx = MapParser.player.x
     private var dy = MapParser.player.y
     private val sprite: Sprite
         get() = player.sprite
 
     override suspend fun Container.sceneInit() {
-        var blockLeft = false
-        var blockRight = false
-        var blockUp = false
-        var blockDown = false
         val portal = Sprite(SpriteAnimation(resourcesVfs["images\\portals.png"].readBitmap(),
                 spriteWidth = 64,
                 spriteHeight = 64,
@@ -50,6 +45,7 @@ class Map(val dependency: Dependency) : Scene() {
         val boxes: MutableList<Image> = mutableListOf()
         val crystals: MutableList<Image> = mutableListOf()
         val mobs: MutableList<Image> = mutableListOf()
+        val floor: MutableList<Image> = mutableListOf()
         val w: Double = views.actualWidth.toDouble()
         val h: Double = views.actualHeight.toDouble()
         position(dx + w/2, dy + h/2)
@@ -64,31 +60,15 @@ class Map(val dependency: Dependency) : Scene() {
             for (f in MapParser.floor) {
                 for (i in 1..f.height.toInt()) {
                     for (j in 1..f.width.toInt()) {
-                        image(stone) {
+                        floor.add(image(stone) {
                             xy(f.x + j * 64, f.y + i * 64)
-                        }
+                        })
                     }
                 }
             }
             for (b in MapParser.boxes) {
                 boxes.add(image(box) {
                     xy(b.x, b.y)
-                    addUpdater {
-                        blockDown = false
-                        blockLeft = false
-                        blockRight = false
-                        blockUp = false
-                        if (collidesWith(sprite)) {
-                            println("" + sprite.x + ", " + sprite.y)
-                            println(hitTest(400, 600))
-                            if (sprite.y - sprite.height <= y)
-                                    //&& hitTest(sprite.x, sprite.y - sprite.height) != null)
-                                blockDown = true
-                            if (sprite.y >= y - height) blockUp = true
-                            if (sprite.x - sprite.width <= x) blockRight = true
-                            if (sprite.x >= x - width) blockLeft = true
-                        }
-                    }
                 })
             }
             for (c in MapParser.crystals) {
@@ -113,58 +93,69 @@ class Map(val dependency: Dependency) : Scene() {
             addChild(sprite.xy(MapParser.player.x, MapParser.player.y))
         }
         if (!MainModule.dynamicLoad) load.await()
+
         sprite.onCollision {
             if (it == portal) {
                 if (views.input.keys[Key.E]) {
-                    launch { sceneContainer.changeTo<MainMenu>() }
+                    launch {
+                        println(MainModule.currentMap)
+                        if (player.haveCrystal) {
+                            if (MainModule.currentMap == "StartMap") {
+                                MainModule.currentMap = "FinalBattle"
+                                sceneContainer.changeTo<Map>()
+                            } else {
+                                sceneContainer.changeTo<MainMenu>()
+                            }
+                        } else {
+                            //views.gameWindow.alert("You haven`t crystal for closing portals!!!")
+                        }
+                    }
+                }
+            } else if (crystals.contains(it)) {
+                if (views.input.keys[Key.E]) {
+                    player.haveCrystal = true
+                    removeChild(it)
                 }
             }
         }
         sprite.
             addHrUpdater {
                 val scale = if (it == 0.hrMilliseconds) 0.0 else (it / 16.666666.hrMilliseconds)
-                /*blockDown = false
-                blockLeft = false
-                blockRight = false
-                blockUp = false
-                for (box in boxes) {
-                    if (box.collidesWith(sprite)) {
-                        println("" + sprite.x + ", " + sprite.y)
-                        println(box.pos)
-                        if (sprite.y + sprite.height + speed <= box.y
-                                && box.y >= sprite.y + sprite.height) blockDown = true
-                        if (box.y + box.height >= sprite.y
-                                && box.y + box.height <= sprite.y + speed) blockUp = true
-                        if (box.x <= sprite.x + sprite.width) blockRight = true
-                        if (box.x + box.width >= sprite.x) blockLeft = true
+                if (collidesWith(floor) && !collidesWith(boxes)) {
+                    when {
+                        views.input.keys[Key.RIGHT] -> {
+                            dx = this@Map.speed
+                            dy = 0.0
+                        }
+                        views.input.keys[Key.LEFT] -> {
+                            dx = -this@Map.speed
+                            dy = 0.0
+                        }
+                        views.input.keys[Key.UP] -> {
+                            dy = -this@Map.speed
+                            dx = 0.0
+                        }
+                        views.input.keys[Key.DOWN] -> {
+                            dy = this@Map.speed
+                            dx = 0.0
+                        }
+                        else -> {
+                            dy = 0.0
+                            dx = 0.0
+                        }
                     }
-                }*/
-                when {
-                    views.input.keys[Key.RIGHT] && !blockRight -> {
-                        dx = this@Map.speed
-                        dy = 0.0
-                    }
-                    views.input.keys[Key.LEFT] && !blockLeft -> {
-                        dx = -this@Map.speed
-                        dy = 0.0
-                    }
-                    views.input.keys[Key.UP] && !blockUp -> {
-                        dy = -this@Map.speed
-                        dx = 0.0
-                    }
-                    views.input.keys[Key.DOWN] && !blockDown -> {
-                        dy = this@Map.speed
-                        dx = 0.0
-                    }
-                    else -> {
-                        dy = 0.0
-                        dx = 0.0
-                    }
+                } else {
+                    dx = -dx
+                    dy = -dy
                 }
-                curSpeed.x = dx * scale
-                curSpeed.y = dy * scale
-                xy(x + curSpeed.x, y + curSpeed.y)
+                xy(x + dx * scale, y + dy * scale)
                 this@sceneInit.position(w/2 - x, h/2 - y)
             }
+    }
+
+    override suspend fun sceneDestroy() {
+        super.sceneDestroy()
+        MapParser.clear()
+        player.haveCrystal = false
     }
 }

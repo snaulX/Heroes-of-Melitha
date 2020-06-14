@@ -14,4 +14,5 @@ object Alve: Hero {
     override val name: String = "Alve"
     override lateinit var sprite: Sprite
     override val description: String = "Brave and great elf. He hate mights and love own bow and forest."
+    override var haveCrystal: Boolean = false
 }

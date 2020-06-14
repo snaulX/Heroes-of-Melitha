@@ -11,4 +11,5 @@ interface Hero {
     val name: String
     var sprite: Sprite
     val description: String
+    var haveCrystal: Boolean
 }

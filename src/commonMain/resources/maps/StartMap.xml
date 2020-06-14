@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Map name="Start Map" width="10" height="10">
     <Floor x="0" y="0" width="10" height="10" />
+    <Box x="0" y="0" />
     <Box x="1" y="0" />
     <Box x="2" y="0" />
     <Box x="3" y="0" />
@@ -22,7 +23,7 @@
     <Box x="0" y="9" />
     <Box x="0" y="10" />
     <Player x="2" y="2" />
-    <Goblin x="3" y="4" />
+    <Goblin x="7" y="8" />
     <Crystal x="10" y="5" />
     <Box x="5" y="5" />
     <Portal x="10" y="10" />

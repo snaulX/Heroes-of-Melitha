@@ -13,5 +13,7 @@ object Arwald: Hero {
     override var might_strength: Double = 200.0
     override val name: String = "Arwald"
     override lateinit var sprite: Sprite
-    override val description: String = "Strong and brave knight. He hates magic, but at close range he is very dangerous."
+    override val description: String = "Strong and brave knight." +
+            " He hates magic, but at close range he is very dangerous."
+    override var haveCrystal: Boolean = false
 }
