@@ -8,6 +8,7 @@ object MapParser {
     var portal: Point = Point(0)
     val floor: MutableSet<Rectangle> = mutableSetOf()
     val crystals: MutableSet<Point> = mutableSetOf()
+    val manas: MutableSet<Point> = mutableSetOf()
     var width = 0
     var height = 0
     var name = ""
@@ -35,6 +36,9 @@ object MapParser {
             for (goblin in xml.children("Goblin")) {
                 goblins.add(Point(goblin.int("x") * 64, goblin.int("y") * 64))
             }
+            for (mana in xml.children("Mana")) {
+                manas.add(Point(mana.int("x") * 64, mana.int("y") * 64))
+            }
         } else {
             throw RuntimeException("${xml.name} is not valid name of root node in map")
         }
@@ -50,5 +54,6 @@ object MapParser {
         height = 0
         name = ""
         goblins.clear()
+        manas.clear()
     }
 }

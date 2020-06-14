@@ -29,6 +29,7 @@ class Map(val dependency: Dependency) : Scene() {
     val crystals: MutableList<Image> = mutableListOf()
     val mobs: MutableList<Mob> = mutableListOf()
     val mobimgs: MutableList<Image> = mutableListOf()
+    val manas: MutableList<Image> = mutableListOf()
     val floor: MutableList<Image> = mutableListOf()
     val w: Double
         get() = views.actualWidth.toDouble()
@@ -56,6 +57,7 @@ class Map(val dependency: Dependency) : Scene() {
             val crystal = resourcesVfs["maps\\score\\crystal.png"].readBitmap()
             val goblin = resourcesVfs["images\\mobs\\goblin.png"].readBitmap()
             val might = resourcesVfs["images\\weapon\\might.png"].readBitmap()
+            val mana = resourcesVfs["images\\spells\\mana.png"].readBitmap()
 
             // Other
             for (f in MapParser.floor) {
@@ -78,6 +80,19 @@ class Map(val dependency: Dependency) : Scene() {
                                             spellIndex = -1
                                         }
                                     }
+                                } else {
+                                    val arrow = Image(resourcesVfs["images\\weapon\\arrow.png"].readBitmap())
+                                            .apply {
+                                                xy(sprite.x, sprite.y)
+                                                onCollision {
+                                                    val i = mobimgs.indexOf(it)
+                                                    if (i != -1) mobs[i].hp -= player.bow_strength
+                                                }
+                                            }
+                                    this@sceneInit.addChild(arrow)
+                                    arrow.tween(arrow::x[this@image.x], arrow::y[this@image.y],
+                                    time = player.bow_speed.seconds)
+                                    this@sceneInit.removeChild(arrow)
                                 }
                             }
                         })
@@ -94,6 +109,11 @@ class Map(val dependency: Dependency) : Scene() {
                     xy(c.x, c.y)
                 })
             }
+            for (m in MapParser.manas) {
+                manas.add(image(mana) {
+                    xy(m.x, m.y)
+                })
+            }
             for (g in MapParser.goblins) {
                 mobs.add(Goblin().apply {
                     if (MainModule.hard) {
@@ -102,6 +122,20 @@ class Map(val dependency: Dependency) : Scene() {
                     }
                     image = image(goblin) {
                         xy(g.x, g.y)
+                        onClick {
+                            val arrow = Image(resourcesVfs["images\\weapon\\arrow.png"].readBitmap())
+                                    .apply {
+                                        xy(sprite.x, sprite.y)
+                                        onCollision {
+                                            val i = mobimgs.indexOf(it)
+                                            if (i != -1) mobs[i].hp -= player.bow_strength
+                                        }
+                                    }
+                            this@sceneInit.addChild(arrow)
+                            arrow.tween(arrow::x[this@image.x], arrow::y[this@image.y],
+                                    time = player.bow_speed.seconds)
+                            this@sceneInit.removeChild(arrow)
+                        }
                     }
                     mobimgs.add(image)
                     map = this@Map
@@ -172,6 +206,14 @@ class Map(val dependency: Dependency) : Scene() {
             spellIndex = when (it.key) {
                 Key.N0 -> 0
                 Key.N1 -> 1
+                Key.N2 -> 2
+                Key.N3 -> 3
+                Key.N4 -> 4
+                Key.N5 -> 5
+                Key.N6 -> 6
+                Key.N7 -> 7
+                Key.N8 -> 8
+                Key.N9 -> 9
                 else -> -1
             }
         }
@@ -195,6 +237,11 @@ class Map(val dependency: Dependency) : Scene() {
             } else if (crystals.contains(target)) {
                 if (views.input.keys[Key.E]) {
                     player.haveCrystal = true
+                    removeChild(target)
+                }
+            } else if (manas.contains(target)) {
+                if (views.input.keys[Key.E]) {
+                    player.mana += 10
                     removeChild(target)
                 }
             }
