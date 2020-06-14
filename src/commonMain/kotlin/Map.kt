@@ -1,7 +1,12 @@
 import com.soywiz.klock.hr.hrMilliseconds
 import com.soywiz.klock.milliseconds
+import com.soywiz.klock.seconds
 import com.soywiz.korev.Key
+import com.soywiz.korge.input.onClick
+import com.soywiz.korge.input.onKeyDown
 import com.soywiz.korge.scene.Scene
+import com.soywiz.korge.tween.get
+import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.readBitmap
@@ -9,6 +14,7 @@ import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.serialization.xml.readXml
 import mobs.Goblin
+import spells.Tornado
 import kotlin.random.Random
 
 class Map(val dependency: Dependency) : Scene() {
@@ -22,11 +28,13 @@ class Map(val dependency: Dependency) : Scene() {
     val boxes: MutableList<Image> = mutableListOf()
     val crystals: MutableList<Image> = mutableListOf()
     val mobs: MutableList<Mob> = mutableListOf()
+    val mobimgs: MutableList<Image> = mutableListOf()
     val floor: MutableList<Image> = mutableListOf()
     val w: Double
         get() = views.actualWidth.toDouble()
     val h: Double
         get() = views.actualHeight.toDouble()
+    var spellIndex = -1
 
     override suspend fun Container.sceneInit() {
         val portal = Sprite(SpriteAnimation(resourcesVfs["images\\portals.png"].readBitmap(),
@@ -47,6 +55,7 @@ class Map(val dependency: Dependency) : Scene() {
             val box = resourcesVfs["maps\\boxes\\wood_box.png"].readBitmap()
             val crystal = resourcesVfs["maps\\score\\crystal.png"].readBitmap()
             val goblin = resourcesVfs["images\\mobs\\goblin.png"].readBitmap()
+            val might = resourcesVfs["images\\weapon\\might.png"].readBitmap()
 
             // Other
             for (f in MapParser.floor) {
@@ -54,6 +63,23 @@ class Map(val dependency: Dependency) : Scene() {
                     for (j in 1..f.width.toInt()) {
                         floor.add(image(stone) {
                             xy(f.x + j * 64, f.y + i * 64)
+                            onClick {
+                                if (spellIndex > -1) {
+                                    launch {
+                                        val s = player.spells[spellIndex]
+                                        if (player.mana >= s.cost) {
+                                            player.mana -= s.cost
+                                            s.sprite = Image(s.sprite.bitmap).apply {
+                                                xy(this@image.x, this@image.y)
+                                            }
+                                            this@sceneInit.addChild(s.sprite)
+                                            s.attack(this.x, this.y)
+                                            this@sceneInit.removeChild(s.sprite)
+                                            spellIndex = -1
+                                        }
+                                    }
+                                }
+                            }
                         })
                     }
                 }
@@ -77,6 +103,7 @@ class Map(val dependency: Dependency) : Scene() {
                     image = image(goblin) {
                         xy(g.x, g.y)
                     }
+                    mobimgs.add(image)
                     map = this@Map
                     when (Random.nextInt(4)) {
                         0 -> {
@@ -99,8 +126,14 @@ class Map(val dependency: Dependency) : Scene() {
                     image.addHrUpdater {
                         val scale = if (it == 0.hrMilliseconds) 0.0 else (it / 16.666666.hrMilliseconds)
                         if (collidesWith(sprite)) {
-                            if (views.keys[Key.SPACE])
+                            if (views.keys[Key.SPACE]) launch {
+                                val m = image(might)
+                                m.tween(m::x[32.0, 0.0],
+                                        m::y[32.0, 0.0],
+                                        time = player.might_speed.seconds)
+                                removeChild(m)
                                 hp -= player.might_strength * player.might_speed * scale
+                            }
                             if (player.armour > 0.0)
                                 player.armour -= hit
                             else
@@ -126,10 +159,22 @@ class Map(val dependency: Dependency) : Scene() {
             addChild(portal)
 
             // Player
+            player.spells.add(Tornado().apply {
+                map = this@Map
+                sprite = Sprite(resourcesVfs["images\\spells\\tornado.png"].readBitmap())
+            })
             sprite.scale = 1.0
             addChild(sprite.xy(MapParser.player.x, MapParser.player.y))
         }
 
+        onKeyDown {
+            // println(spellIndex)
+            spellIndex = when (it.key) {
+                Key.N0 -> 0
+                Key.N1 -> 1
+                else -> -1
+            }
+        }
         sprite.onCollision { target ->
             if (target == portal) {
                 if (views.input.keys[Key.E]) {
@@ -194,5 +239,6 @@ class Map(val dependency: Dependency) : Scene() {
         super.sceneDestroy()
         MapParser.clear()
         player.haveCrystal = false
+        player.spells.clear()
     }
 }

@@ -11,4 +11,6 @@ interface Hero {
     val name: String
     var sprite: Sprite
     var haveCrystal: Boolean
+    var mana: Int
+    val spells: MutableList<Spell>
 }

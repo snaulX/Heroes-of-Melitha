@@ -1,6 +1,7 @@
 package heroes
 
 import Hero
+import Spell
 import com.soywiz.korge.view.Sprite
 
 object Alve: Hero {
@@ -14,4 +15,6 @@ object Alve: Hero {
     override val name: String = "Alve"
     override lateinit var sprite: Sprite
     override var haveCrystal: Boolean = false
+    override var mana: Int = 20
+    override val spells: MutableList<Spell> = mutableListOf()
 }

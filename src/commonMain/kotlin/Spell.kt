@@ -1,10 +1,11 @@
+import com.soywiz.korge.view.Image
+
 interface Spell {
+    var sprite: Image
+    var map: Map
     val cost: Int
-    var level: Int
     val range: Double
     val castTime: Double //in seconds
-    var x: Double
-    var y: Double
-    fun attack(x: Double, y: Double)
-    fun actOn()
+
+    suspend fun attack(x: Double, y: Double)
 }
