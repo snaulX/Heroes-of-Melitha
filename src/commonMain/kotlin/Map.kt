@@ -200,6 +200,10 @@ class Map(val dependency: Dependency) : Scene() {
                 map = this@Map
                 sprite = Sprite(resourcesVfs["images\\spells\\cactus.png"].readBitmap())
             })
+            player.spells.add(Cactus().apply {
+                map = this@Map
+                sprite = Sprite(resourcesVfs["images\\spells\\boom.png"].readBitmap())
+            })
             sprite.scale = 1.0
             addChild(sprite.xy(MapParser.player.x, MapParser.player.y))
         }

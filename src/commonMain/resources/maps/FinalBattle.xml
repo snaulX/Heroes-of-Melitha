@@ -3,6 +3,43 @@
     <Floor x="0" y="0" width="15" height="10" />
     <Floor x="5" y="10" width="30" height="7"/>
     <Player x="35" y="17" />
-    <Crystal x="3" y="3" />
+    <Crystal x="14" y="8" />
     <Portal x="2" y="2" />
+
+    <!--Boxes-->
+    <Box x="25" y="15" />
+    <Box x="28" y="15" />
+    <Box x="23" y="15" />
+    <Box x="20" y="15" />
+    <Box x="17" y="15" />
+    <Box x="13" y="15" />
+    <Box x="10" y="15" />
+    <Box x="6" y="15" />
+    <Box x="25" y="12" />
+    <Box x="28" y="12" />
+    <Box x="23" y="12" />
+    <Box x="20" y="12" />
+    <Box x="17" y="12" />
+    <Box x="13" y="12" />
+    <Box x="13" y="11" />
+    <Box x="13" y="10" />
+    <Box x="13" y="9" />
+    <Box x="13" y="8" />
+    <Box x="13" y="7" />
+    <Box x="13" y="6" />
+    <Box x="13" y="5" />
+    <Box x="10" y="12" />
+    <Box x="6" y="12" />
+    <Box x="9" y="10" />
+    <Box x="9" y="9" />
+    <Box x="9" y="8" />
+    <Box x="9" y="7" />
+    <Box x="9" y="6" />
+    <Box x="9" y="5" />
+    <Box x="9" y="11" />
+    <Box x="9" y="12" />
+    <!--End of boxes-->
+    <Goblin x="20" y="10" />
+    <Goblin x="10" y="16" />
+    <Goblin x="5" y="5" />
 </Map>

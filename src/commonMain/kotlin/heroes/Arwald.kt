@@ -5,8 +5,8 @@ import Spell
 import com.soywiz.korge.view.Sprite
 
 object Arwald: Hero {
-    override var hp: Double = 60.0
-    override var speed: Double = 1.0
+    override var hp: Double = 70.0
+    override var speed: Double = 1.1
     override var armour: Double = 40.0
     override var bow_speed: Double = 0.5
     override var might_speed: Double = 0.7

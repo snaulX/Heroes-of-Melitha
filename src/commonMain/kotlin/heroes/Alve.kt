@@ -15,6 +15,6 @@ object Alve: Hero {
     override val name: String = "Alve"
     override lateinit var sprite: Sprite
     override var haveCrystal: Boolean = false
-    override var mana: Int = 20
+    override var mana: Int = 25
     override val spells: MutableList<Spell> = mutableListOf()
 }
