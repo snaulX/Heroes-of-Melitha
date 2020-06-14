@@ -23,11 +23,15 @@ class Map(val dependency: Dependency) : Scene() {
     val player
         get() = MainModule.hero
     private val speed = player.speed
-    var dx = MapParser.player.x
-    var dy = MapParser.player.y
+    private var dx = MapParser.player.x
+    private var dy = MapParser.player.y
+    private val sprite: Sprite
+        get() = player.sprite
 
     override suspend fun Container.sceneInit() {
-        position(dx, dy)
+        val w: Double = views.actualWidth.toDouble()
+        val h: Double = views.actualHeight.toDouble()
+        position(dx + w/2, dy + h/2)
         val load = async {
             MapParser.parse(resourcesVfs["maps\\${MainModule.currentMap}.xml"].readXml())
             val stone = resourcesVfs["maps\\floor\\stone_floor${Random.nextInt(1, 5)}.png"]
@@ -75,24 +79,37 @@ class Map(val dependency: Dependency) : Scene() {
             portal.playAnimationLooped()
 
             // Player
-            player.sprite.scale = 1.0
-            addChild(player.sprite.xy(MapParser.player.x, MapParser.player.y))
+            sprite.scale = 1.0
+            addChild(sprite.xy(MapParser.player.x, MapParser.player.y))
         }
         if (!MainModule.dynamicLoad) load.await()
 
             addHrUpdater {
                 val scale = if (it == 0.hrMilliseconds) 0.0 else (it / 16.666666.hrMilliseconds)
                 when {
-                    views.input.keys[Key.RIGHT] -> dx = -this@Map.speed
-                    views.input.keys[Key.LEFT] -> dx = this@Map.speed
-                    views.input.keys[Key.UP] -> dy = this@Map.speed
-                    views.input.keys[Key.DOWN] -> dy = -this@Map.speed
+                    views.input.keys[Key.RIGHT] -> {
+                        dx = this@Map.speed
+                        dy = 0.0
+                    }
+                    views.input.keys[Key.LEFT] -> {
+                        dx = -this@Map.speed
+                        dy = 0.0
+                    }
+                    views.input.keys[Key.UP] -> {
+                        dy = -this@Map.speed
+                        dx = 0.0
+                    }
+                    views.input.keys[Key.DOWN] -> {
+                        dy = this@Map.speed
+                        dx = 0.0
+                    }
                     else -> {
                         dy = 0.0
                         dx = 0.0
                     }
                 }
-                position(pos.x + dx * scale, pos.y + dy * scale)
+                sprite.xy(sprite.x + dx * scale, sprite.y + dy * scale)
+                position(w/2 - sprite.x, h/2 - sprite.y)
             }
     }
 }
