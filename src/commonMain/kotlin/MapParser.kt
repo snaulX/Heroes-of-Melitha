@@ -13,12 +13,14 @@ object MapParser {
     var height = 0
     var name = ""
     val goblins: MutableList<Point> = mutableListOf()
+    var music = ""
 
     fun parse(xml: Xml) {
         if (xml.name == "Map") {
             width = xml.int("width") * 64
             height = xml.int("height") * 64
             name = xml.attribute("name") ?: "Untitled Map"
+            music = xml.attribute("music") ?: "menu_theme"
             val pl = xml.child("Player") ?: throw RuntimeException("Map haven`t player")
             player = Point(pl.int("x") * 64, pl.int("y") * 64)
             val pt = xml.child("Portal") ?: throw RuntimeException("Map haven`t portal")
@@ -55,5 +57,6 @@ object MapParser {
         name = ""
         goblins.clear()
         manas.clear()
+        music = ""
     }
 }

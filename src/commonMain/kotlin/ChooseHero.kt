@@ -1,3 +1,5 @@
+import com.soywiz.korau.sound.PlaybackTimes
+import com.soywiz.korau.sound.readMusic
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onOut
 import com.soywiz.korge.input.onOver
@@ -15,6 +17,11 @@ class ChooseHero(val dependency: Dependency) : Scene() {
             get() = heroes[i]
 
     override suspend fun Container.sceneInit() {
+        if (!dependency.channel.playing) {
+            dependency.channel = resourcesVfs["music\\menu_theme.wav"]
+                    .readMusic()
+                    .play(PlaybackTimes.INFINITE)
+        }
         val width = views.actualWidth.toDouble()
         val height = views.actualHeight.toDouble()
 
@@ -43,7 +50,6 @@ class ChooseHero(val dependency: Dependency) : Scene() {
                 .onClick {
                     MainModule.hero = hero
                     MainModule.hard = false
-                    dependency.channel.stop()
                     sceneContainer.changeTo<Map>()
                 }
         /*val portalsMap = SpriteAnimation(resourcesVfs["images\\portals.png"].readBitmap(),
@@ -135,7 +141,6 @@ class ChooseHero(val dependency: Dependency) : Scene() {
             onClick {
                 if (i < heroes.size - 1) {
                     i++
-                    println(this@sceneInit.children.joinToString())
                     update()
                 }
             }
@@ -145,7 +150,6 @@ class ChooseHero(val dependency: Dependency) : Scene() {
                 .onClick {
                     MainModule.hero = hero
                     MainModule.hard = true
-                    dependency.channel.stop()
                     sceneContainer.changeTo<Map>()
                 }
     }

@@ -1,6 +1,8 @@
 import com.soywiz.klock.hr.hrMilliseconds
 import com.soywiz.klock.milliseconds
 import com.soywiz.klock.seconds
+import com.soywiz.korau.sound.PlaybackTimes
+import com.soywiz.korau.sound.readMusic
 import com.soywiz.korev.Key
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onKeyDown
@@ -38,6 +40,7 @@ class Map(val dependency: Dependency) : Scene() {
     var spellIndex = -1
 
     override suspend fun Container.sceneInit() {
+        dependency.channel.stop()
         val portal = Sprite(SpriteAnimation(resourcesVfs["images\\portals.png"].readBitmap(),
                 spriteWidth = 64,
                 spriteHeight = 64,
@@ -51,6 +54,9 @@ class Map(val dependency: Dependency) : Scene() {
         launch {
             views.clearColor = Colors.BLACK
             MapParser.parse(resourcesVfs["maps\\${MainModule.currentMap}.xml"].readXml())
+            dependency.channel = resourcesVfs["music\\${MapParser.music}.wav"]
+                    .readMusic()
+                    .play(PlaybackTimes.INFINITE)
             val stone = resourcesVfs["maps\\floor\\stone_floor${Random.nextInt(1, 5)}.png"]
                     .readBitmap()
             val box = resourcesVfs["maps\\boxes\\wood_box.png"].readBitmap()
@@ -294,5 +300,6 @@ class Map(val dependency: Dependency) : Scene() {
         MapParser.clear()
         player.haveCrystal = false
         player.spells.clear()
+        dependency.channel.stop()
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Map name="Start Map" width="10" height="10">
+<Map name="Start Map" width="10" height="10" music="start">
     <Floor x="0" y="0" width="10" height="10" />
     <!--Borders-->
     <Box x="0" y="0" />
