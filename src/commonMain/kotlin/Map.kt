@@ -53,7 +53,7 @@ class Map(val dependency: Dependency) : Scene() {
         position(dx + w/2, dy + h/2)
         launch {
             views.clearColor = Colors.BLACK
-            MapParser.parse(resourcesVfs["maps\\${MainModule.currentMap}.xml"].readXml())
+            MapParser.parse(resourcesVfs["maps\\${MainModule.maps[MainModule.mapIndex]}.xml"].readXml())
             dependency.channel = resourcesVfs["music\\${MapParser.music}.wav"]
                     .readMusic()
                     .play(PlaybackTimes.INFINITE)
@@ -238,10 +238,9 @@ class Map(val dependency: Dependency) : Scene() {
             if (target == portal) {
                 if (views.input.keys[Key.E]) {
                     launch {
-                        println(MainModule.currentMap)
                         if (player.haveCrystal) {
-                            if (MainModule.currentMap == "StartMap") {
-                                MainModule.currentMap = "FinalBattle"
+                            if (MainModule.mapIndex < MainModule.maps.lastIndex) {
+                                MainModule.mapIndex++
                                 sceneContainer.changeTo<Map>()
                             } else {
                                 sceneContainer.changeTo<MainMenu>()

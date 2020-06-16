@@ -11,7 +11,9 @@ import com.soywiz.korio.net.URL
 
 class MainMenu(val dependency: Dependency): Scene() {
     lateinit var play: TextButton
-    lateinit var lore: TextButton
+    lateinit var h2p: TextButton
+    lateinit var exit: TextButton
+    lateinit var h2c: TextButton
     lateinit var poster: Bitmap
 
     override suspend fun Container.sceneInit() {
@@ -32,15 +34,22 @@ class MainMenu(val dependency: Dependency): Scene() {
         }!!
         play.xy(20, 100)
         play.textColor = Colors.BLUEVIOLET
-        lore = textButton(256.0, 64.0, "How To Play").onClick {
-            views.gameWindow.browse(URL.invoke("https://github.com/snaulX/Heroes-of-Melitha"))
+        h2p = textButton(256.0, 64.0, "How To Play").onClick {
+            views.gameWindow.browse(URL.invoke(
+                    "https://github.com/snaulX/Heroes-of-Melitha/blob/master/README.md#heroes-of-melitha"))
         }!!
-        lore.xy(20, 200)
-        lore.textColor = Colors.BLUEVIOLET
-        lore = textButton(256.0, 64.0, "Exit").onClick {
+        h2p.xy(20, 200)
+        h2p.textColor = Colors.BLUEVIOLET
+        h2c = textButton(256.0, 64.0, "How To Contribute").onClick {
+            views.gameWindow.browse(URL.invoke(
+                    "https://github.com/snaulX/Heroes-of-Melitha/blob/master/CONTRIBUTING.md"))
+        }!!
+        h2c.xy(20, 300)
+        h2c.textColor = Colors.BLUEVIOLET
+        exit = textButton(256.0, 64.0, "Exit").onClick {
             views.gameWindow.exit()
         }!!
-        lore.xy(20, 300)
-        lore.textColor = Colors.BLUEVIOLET
+        exit.xy(20, 400)
+        exit.textColor = Colors.BLUEVIOLET
     }
 }
