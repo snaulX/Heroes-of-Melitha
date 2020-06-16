@@ -1,5 +1,5 @@
 # Heroes of Melitha
-Heroes of Melitha - RPG game for jam.korge.org
+Heroes of Melitha - RPG game for jam.korge.org. Some ideas for mechanics are taken from HoMM3.
 ## Lore
 Live two worlds - Melitha - world of man and elves and other 'light' creatures; and Underworld - world of goblins, devils and other 'dark' creatures. Once old wizzard make crystal which open portals from Underworld to Melitha and 'dark' creatures going out of this portals. And some heroes called for save Melitha and win 'dark' creatures and close portals.
 ## Controls
@@ -17,3 +17,7 @@ Press 'Play' in main menu. Choose hero and level of difficult and start play. Fi
 After closing of portal you will be in menu again. Choose hero and level of difficult and start play. It was final map. After closing portal you passing the game!
 ## Contributing
 Follow CONTRIBUTING.md
+## How to Run
+1. Download JAR file from https://snaulx.itch.io/heroes-of-melitha. After install run it in command line: `java -jar Heroes-of-Melitha-all-4.10.1.jar`.
+-or-
+2. Clone this repository and build `gradlew packageJvmFatJar` and run builded JAR.
