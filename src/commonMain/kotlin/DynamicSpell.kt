@@ -1,4 +1,4 @@
 interface DynamicSpell: Spell {
     val actionTime: Double //in seconds
-    val speed: Double //in seconds. -1.0 if spell always active
+    val chance: Double //chance of act. If -1.0 always active
 }

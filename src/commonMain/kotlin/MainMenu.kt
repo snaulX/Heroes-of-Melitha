@@ -14,6 +14,7 @@ class MainMenu(val dependency: Dependency): Scene() {
     lateinit var h2p: TextButton
     lateinit var exit: TextButton
     lateinit var h2c: TextButton
+    lateinit var report: TextButton
     lateinit var poster: Bitmap
 
     override suspend fun Container.sceneInit() {
@@ -46,10 +47,16 @@ class MainMenu(val dependency: Dependency): Scene() {
         }!!
         h2c.xy(20, 300)
         h2c.textColor = Colors.BLUEVIOLET
+        report = textButton(256.0, 64.0, "Report The Issue").onClick {
+            views.gameWindow.browse(URL.invoke(
+                    "https://github.com/snaulX/Heroes-of-Melitha/issues/new"))
+        }!!
+        report.xy(20, 400)
+        report.textColor = Colors.BLUEVIOLET
         exit = textButton(256.0, 64.0, "Exit").onClick {
             views.gameWindow.exit()
         }!!
-        exit.xy(20, 400)
+        exit.xy(20, 500)
         exit.textColor = Colors.BLUEVIOLET
     }
 }

@@ -12,6 +12,7 @@ Press:
 **1 and click on the floor** - to use spell Cactus  
 **2 and click on the floor** - to use spell Bomb  
 **3 and click on the floor** - to use spell Shield  
+**4 and click on the floor** - to use spell Poison  
 ## How to Play
 Press 'Play' in main menu. Choose hero and level of difficult and start play. Fight with goblins and pick up the crystal and close the portal. If the game unexpectedly closed during the battle, it means that you were killed and you need to start passing all the cards again.
 After closing of portal you will be in menu again. Choose hero and level of difficult and start play. It was final map. After closing portal you passing the game!

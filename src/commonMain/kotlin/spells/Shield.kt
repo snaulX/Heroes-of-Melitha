@@ -8,7 +8,7 @@ import com.soywiz.korio.async.delay
 
 class Shield: DynamicSpell {
     override val actionTime: Double = 2.0
-    override val speed: Double = -1.0
+    override val chance: Double = -1.0
     override lateinit var sprite: Image
     override lateinit var map: Map
     override val cost: Int = 10

@@ -214,6 +214,10 @@ class Map(val dependency: Dependency) : Scene() {
                 map = this@Map
                 sprite = Sprite(resourcesVfs["images\\spells\\shield.png"].readBitmap())
             })
+            player.spells.add(Poison().apply {
+                map = this@Map
+                sprite = Sprite(resourcesVfs["images\\spells\\poison.png"].readBitmap())
+            })
             sprite.scale = 1.0
             addChild(sprite.xy(MapParser.player.x, MapParser.player.y))
         }
