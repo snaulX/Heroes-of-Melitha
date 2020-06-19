@@ -22,8 +22,8 @@ class ChooseHero(val dependency: Dependency) : Scene() {
                     .readMusic()
                     .play(PlaybackTimes.INFINITE)
         }
-        val width = views.actualWidth.toDouble()
-        val height = views.actualHeight.toDouble()
+        val width = views.virtualWidth.toDouble()
+        val height = views.virtualHeight.toDouble()
 
         suspend fun update() {
             (getChildAt(3) as Text).text = hero.might_strength.toString()

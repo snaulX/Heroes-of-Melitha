@@ -23,13 +23,13 @@ class MainMenu(val dependency: Dependency): Scene() {
                 poster = resourcesVfs["images\\poster.png"].readBitmap()
             }.await()
             image(poster) {
-                scaleX = views.actualWidth / 1920.0
-                scaleY = views.actualHeight / 1024.0
+                scaleX = views.virtualWidth / 1920.0
+                scaleY = views.virtualHeight / 1024.0
             }
         } catch (e: Exception) {
-            solidRect(views.actualWidth.toDouble(), views.actualHeight.toDouble(), Colors.DARKBLUE)
+            solidRect(views.virtualWidth.toDouble(), views.virtualHeight.toDouble(), Colors.DARKBLUE)
         }
-        text("Heroes of Melitha", 40.0).xy(views.actualWidth/2.0, 20.0)
+        text("Heroes of Melitha", 40.0).xy(views.virtualWidth/2.0, 20.0)
         play = textButton(256.0, 64.0, "Play").onClick {
             sceneContainer.changeTo<ChooseHero>()
         }!!

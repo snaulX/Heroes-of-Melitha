@@ -34,9 +34,9 @@ class Map(val dependency: Dependency) : Scene() {
     val manas: MutableList<Image> = mutableListOf()
     val floor: MutableList<Image> = mutableListOf()
     val w: Double
-        get() = views.actualWidth.toDouble()
+        get() = views.virtualWidth.toDouble()
     val h: Double
-        get() = views.actualHeight.toDouble()
+        get() = views.virtualHeight.toDouble()
     var spellIndex = -1
 
     override suspend fun Container.sceneInit() {
