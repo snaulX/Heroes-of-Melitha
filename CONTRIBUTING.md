@@ -1,5 +1,6 @@
 # What I need for add something to game?
-You need to know Kotlin programming language and have IDE for comfort.
+**Must know** - Kotlin.
+_Should have_ IDE (InteliJ IDEA) and _know_ [KorGE](https://korge.org/)
 # How to add something to game?
 1. Create fork of this repository
 2. Add what do you want.
@@ -13,6 +14,41 @@ You need to know Kotlin programming language and have IDE for comfort.
 # How to add own
 After open project in IDE go to ..
 ## Spell
+.. folder src/commonMain/kotlin/spells/ and create Kotlin file _your spell name_.kt by template:
+```kt
+package spells
+
+import Spell
+import Map
+import com.soywiz.klock.seconds
+import com.soywiz.korge.tween.get
+import com.soywiz.korge.tween.tween
+import com.soywiz.korge.view.Image
+
+class <your-name-of-spell>: Spell {
+    override lateinit var sprite: Image
+    override lateinit var map: Map
+    override val cost: Int = <spell cost>
+    override val range: Double = <range of cost>
+    override val castTime: Double = <cast time of spell>
+
+    override suspend fun attack(x: Double, y: Double) {
+        sprite.tween(sprite::scale[range], time = castTime.seconds) //or your animation while cast -> https://korlibs.soywiz.com/korge/animation/
+        sprite.onCollision {
+            val i = map.mobimgs.indexOf(it) // if i != -1 that menas that map.mobs[i] in this spell
+            if (i != -1) map.mobs[i].hp -= 1.0 //for example mob that touches our spell loose one health point
+        }
+    }
+}
+```
+For add this spell you need open src/commonMain/kotlin/Map.kt and add to 220 line this string
+```kt
+player.spells.add(<your-name-of-spell>().apply {
+                map = this@Map
+                sprite = Sprite(resourcesVfs["images\\spells\\<your-image-of-spell>.png"].readBitmap())
+            })
+```  
+It's all! Build game and test it! If you have issues write there are -> https://github.com/snaulX/Heroes-of-Melitha/issues
 ## Map
 .. folder src/commonMain/resources/maps and create file _your map name_.xml with current content
 ```xml
