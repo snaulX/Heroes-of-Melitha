@@ -4,7 +4,7 @@ import Hero
 import Spell
 import com.soywiz.korge.view.Sprite
 
-object Eva: Hero {
+class Eva: Hero {
     override var hp: Double = 90.0
     override var speed: Double = 1.5
     override var armour: Double = 0.0

@@ -49,6 +49,50 @@ player.spells.add(<your-name-of-spell>().apply {
             })
 ```  
 It's all! Build game and test it! If you have issues write there are -> https://github.com/snaulX/Heroes-of-Melitha/issues
+## Spell that be active on some time
+.. folder src/commonMain/kotlin/spells/ and create Kotlin file _your spell name_.kt by template:
+```kt
+package spells
+
+import DynamicSpell
+import com.soywiz.klock.seconds
+import com.soywiz.korge.tween.get
+import com.soywiz.korge.tween.tween
+import com.soywiz.korge.view.Image
+import com.soywiz.korge.view.onCollision
+import com.soywiz.korio.async.delay
+import Map
+import kotlin.random.Random
+
+class <name-of-your-spell>: DynamicSpell {
+    override val actionTime: Double = <time of action spell>
+    override val chance: Double = <chance of act of spell. -1.0 if spell always active>
+    override lateinit var sprite: Image
+    override lateinit var map: Map
+    override val cost: Int = <cost of spell>
+    override val range: Double = <range of spell>
+    override val castTime: Double = <time of cast>
+
+    override suspend fun attack(x: Double, y: Double) {
+        sprite.tween(sprite::scale[range], time = castTime.seconds)
+        sprite.onCollision {
+            val i = map.mobimgs.indexOf(it)
+            if (i != -1 && Random.nextDouble() <= chance) map.mobs[i].hp -= 1.0
+            //check template for this function on
+            //https://github.com/snaulX/Heroes-of-Melitha/blob/master/CONTRIBUTING.md#Spell
+        }
+        delay(actionTime.seconds)
+    }
+}
+```
+For add this spell you need open src/commonMain/kotlin/Map.kt and add to 220 line this string
+```kt
+player.spells.add(<your-name-of-spell>().apply {
+                map = this@Map
+                sprite = Sprite(resourcesVfs["images\\spells\\<your-image-of-spell>.png"].readBitmap())
+            })
+```  
+It's all! Build game and test it! If you have issues write there are -> https://github.com/snaulX/Heroes-of-Melitha/issues
 ## Map
 .. folder src/commonMain/resources/maps and create file _your map name_.xml with current content
 ```xml
@@ -67,7 +111,7 @@ Save file, test map and.. we haven't exception but player cannot move and map ca
 Okay we create playable map but something is missing, namely obstacles (boxes) and enemies (goblins). Node `<Goblin x="x coordinate of goblin" y="y coordinate of goblin" />` adds goblin to map. We can adds goblins how many we want. Node `<Box x="x coordinate of box" y="y coordinate of box" />` adds box to map. We can adds boxes how many we want.
 It's all! Build game and test it! If you have issues write there are -> https://github.com/snaulX/Heroes-of-Melitha/issues
 ## Hero
-.. folder src/commonMain/kotlin/heroes/ and create Kotlin file with object and name of your hero. Fill this file how this template:
+.. folder src/commonMain/kotlin/heroes/ and create Kotlin file with class and name of your hero. Fill this file how this template:
 ```kt
 package heroes
 
@@ -75,7 +119,7 @@ import Hero
 import Spell
 import com.soywiz.korge.view.Sprite
 
-object <short name of hero>: Hero {
+class <short name of hero>: Hero {
     override var hp: Double = <health points of your hero>
     override var speed: Double = <speed of your hero>
     override var armour: Double = <armour of your hero>
