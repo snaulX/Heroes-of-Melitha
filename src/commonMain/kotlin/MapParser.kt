@@ -13,6 +13,7 @@ object MapParser {
     var height = 0
     var name = ""
     val goblins: MutableList<Point> = mutableListOf()
+    val demons: MutableList<Point> = mutableListOf()
     var music = ""
 
     fun parse(xml: Xml) {
@@ -38,6 +39,9 @@ object MapParser {
             for (goblin in xml.children("Goblin")) {
                 goblins.add(Point(goblin.int("x") * 64, goblin.int("y") * 64))
             }
+            for (demon in xml.children("Demon")) {
+                demons.add(Point(demon.int("x") * 64, demon.int("y") * 64))
+            }
             for (mana in xml.children("Mana")) {
                 manas.add(Point(mana.int("x") * 64, mana.int("y") * 64))
             }
@@ -56,6 +60,7 @@ object MapParser {
         height = 0
         name = ""
         goblins.clear()
+        demons.clear()
         manas.clear()
         music = ""
     }

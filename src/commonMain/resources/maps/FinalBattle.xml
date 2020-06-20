@@ -49,4 +49,5 @@
     <Goblin x="10" y="16" />
     <Goblin x="5" y="5" />
     <Goblin x="1" y="1" />
+    <Demon x="2" y="3" />
 </Map>

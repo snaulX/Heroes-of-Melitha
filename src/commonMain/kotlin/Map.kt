@@ -62,6 +62,7 @@ class Map(val dependency: Dependency) : Scene() {
             val box = resourcesVfs["maps\\boxes\\wood_box.png"].readBitmap()
             val crystal = resourcesVfs["maps\\score\\crystal.png"].readBitmap()
             val goblin = resourcesVfs["images\\mobs\\goblin.png"].readBitmap()
+            val demon = resourcesVfs["images\\mobs\\demon.png"].readBitmap()
             val might = resourcesVfs["images\\weapon\\might.png"].readBitmap()
             val mana = resourcesVfs["images\\spells\\mana.png"].readBitmap()
 
@@ -123,8 +124,8 @@ class Map(val dependency: Dependency) : Scene() {
             for (g in MapParser.goblins) {
                 mobs.add(Goblin().apply {
                     if (MainModule.hard) {
-                        hp = 1000.0
-                        hit = 1.0
+                        hp += 400.0
+                        hit += 0.4
                     }
                     image = image(goblin) {
                         xy(g.x, g.y)
@@ -176,6 +177,75 @@ class Map(val dependency: Dependency) : Scene() {
                             }
                             if (player.armour > 0.0)
                                 player.armour -= hit
+                            else
+                                player.hp -= hit
+                        } else {
+                            move(scale)
+                        }
+                        if (hp <= 0.0) {
+                            this@sceneInit.removeChild(this)
+                        }
+                    }
+                })
+            }
+            for (d in MapParser.demons) {
+                mobs.add(Demon().apply {
+                    if (MainModule.hard) {
+                        hp += 500.0
+                        hit += 0.35
+                    }
+                    image = image(demon) {
+                        xy(d.x, d.y)
+                        onClick {
+                            val arrow = Image(resourcesVfs["images\\weapon\\arrow.png"].readBitmap())
+                                    .apply {
+                                        xy(sprite.x, sprite.y)
+                                        onCollision {
+                                            val i = mobimgs.indexOf(it)
+                                            if (i != -1) mobs[i].hp -= player.bow_strength
+                                        }
+                                    }
+                            this@sceneInit.addChild(arrow)
+                            arrow.tween(arrow::x[this@image.x], arrow::y[this@image.y],
+                                    time = player.bow_speed.seconds)
+                            this@sceneInit.removeChild(arrow)
+                        }
+                    }
+                    mobimgs.add(image)
+                    map = this@Map
+                    when (Random.nextInt(4)) {
+                        0 -> {
+                            dx = 1.0
+                            dy = 0.0
+                        }
+                        1 -> {
+                            dx = -1.0
+                            dy = 0.0
+                        }
+                        2 -> {
+                            dy = -1.0
+                            dx = 0.0
+                        }
+                        else -> {
+                            dy = 1.0
+                            dx = 0.0
+                        }
+                    }
+                    image.addHrUpdater {
+                        val scale = if (it == 0.hrMilliseconds) 0.0 else (it / 16.666666.hrMilliseconds)
+                        if (collidesWith(sprite)) {
+                            if (views.keys[Key.SPACE]) launch {
+                                val m = image(might)
+                                m.tween(m::x[32.0, 0.0],
+                                        m::y[32.0, 0.0],
+                                        time = player.might_speed.seconds)
+                                removeChild(m)
+                                hp -= player.might_strength * player.might_speed * scale
+                            }
+                            if (player.armour > 0.0) {
+                                player.armour -= hit
+                                player.hp -= hit * 0.1
+                            }
                             else
                                 player.hp -= hit
                         } else {
